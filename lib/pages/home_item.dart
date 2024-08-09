@@ -171,7 +171,7 @@ class _HomeItemState extends State<HomeItem> with AutomaticKeepAliveClientMixin 
                                               Row(
                                               crossAxisAlignment: CrossAxisAlignment.center,
                                               children: [
-                                                Container(
+                                                SizedBox(
                                                   height: 150,
                                                   width: 100,
                                                   child: ClipRRect(
@@ -321,7 +321,6 @@ class _HomeItemState extends State<HomeItem> with AutomaticKeepAliveClientMixin 
                                               child: InkWell(
                                                 onTap : () {
                                                   setState(() {
-                                                    print("Share");
                                                   });
                                                 },
                                                 child: Container(

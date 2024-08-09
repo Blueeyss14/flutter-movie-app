@@ -56,7 +56,7 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin 
               const SizedBox(height: 20),
               //AppBar-------------------------
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Container(
                     margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),

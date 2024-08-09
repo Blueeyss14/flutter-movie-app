@@ -6,7 +6,7 @@ class RatingStar with ChangeNotifier {
   final Icon starIconFilled = const Icon(FluentIcons.star_20_filled);
   final Icon starIconRegular = const Icon(FluentIcons.star_20_regular);
   final Color starIconColor = Colors.yellow;
-  final double starIconSize = 16;
+  final double starIconSize = 15;
 
   final Future<List<Movie>> _movieFuture = Movie.dataMovie();
   Future<List<Movie>> get movie => _movieFuture;

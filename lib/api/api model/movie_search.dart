@@ -5,11 +5,13 @@ import 'package:movie_app_tmd_api/api/api_key.dart';
 
 class SearchMovie {
   String title, overview, thumbnail;
+  double rating;
 
   SearchMovie({
     required this.title,
     required this.overview,
     required this.thumbnail,
+    required this.rating,
   });
 
   static Future<List<SearchMovie>> dataMovie() async {
@@ -25,6 +27,7 @@ class SearchMovie {
           title: movieData['title'],
           overview: movieData['overview'],
           thumbnail: movieData['poster_path'],
+          rating: movieData['vote_average'],
         )).toList();
 
         allMovies+=(movies);

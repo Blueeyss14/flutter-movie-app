@@ -14,7 +14,6 @@ class _SearchItemState extends State<SearchItem> {
 
   @override
   void dispose() {
-    // Membersihkan controller untuk menghindari kebocoran memori
     Provider.of<SearchFn>(context, listen: false).searchController.dispose();
     super.dispose();
   }
@@ -22,7 +21,6 @@ class _SearchItemState extends State<SearchItem> {
   @override
   Widget build(BuildContext context) {
     final searchProvider = Provider.of<SearchFn>(context);
-
     return Container(
       decoration: const BoxDecoration(
         gradient: LinearGradient(
@@ -50,28 +48,37 @@ class _SearchItemState extends State<SearchItem> {
                   )
               ),
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Expanded(
-                      child: TextField(
-                        style: const TextStyle(color: ColorStyle.whiteColor),
-                        decoration: const InputDecoration(
-                          border: InputBorder.none,
-                          hintText: 'Search...',
-                          hintStyle: TextStyle(color: ColorStyle.whiteColor),
-                        ),
-                        controller: searchProvider.searchController,
-                        onChanged: (value) {
-                          searchProvider.searchMovieFn(value);
-                        },
-                        onSubmitted: (value) {
-                          searchProvider.onSearchSubmitted();
-                        },
-                      ),
-                    )
-                  ],
+                padding: const EdgeInsets.all(8),
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(30),
+                    color: Colors.black.withOpacity(0.1),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Expanded(
+                          child: TextField(
+                            style: const TextStyle(color: ColorStyle.whiteColor),
+                            decoration: const InputDecoration(
+                              border: InputBorder.none,
+                              hintText: 'Search...',
+                              hintStyle: TextStyle(color: ColorStyle.whiteColor),
+                            ),
+                            controller: searchProvider.searchController,
+                            onChanged: (value) {
+                              searchProvider.searchMovieFn(value);
+                            },
+                            onSubmitted: (value) {
+                              searchProvider.onSearchSubmitted();
+                            },
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
                 ),
               ),
             ),
@@ -92,8 +99,40 @@ class _SearchItemState extends State<SearchItem> {
                     padding: EdgeInsets.zero,
                     itemCount: searchProvider.filteredMovies.length,
                     itemBuilder: (context, index) {
-                      return ListTile(
-                        title: Text(searchProvider.filteredMovies[index].title),
+                      return SingleChildScrollView(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const SizedBox(height: 10),
+                            InkWell(
+                              splashColor: Colors.transparent,
+                              onTap: () {
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 15),
+                                child: Row(
+                                    children: [
+                                      SizedBox(
+                                          height: 70,
+                                          width: 50,
+                                          child: ClipRRect(
+                                            borderRadius: BorderRadius.circular(10),
+                                              child: Image.network( 'https://image.tmdb.org/t/p/w500${searchProvider.filteredMovies[index].thumbnail}', fit: BoxFit.cover,)),
+                                      ),
+                                      const SizedBox(width: 15),
+                                      Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Text(searchProvider.filteredMovies[index].title, style: const TextStyle(color: ColorStyle.whiteColor)),
+                                          Text('${searchProvider.filteredMovies[index].rating}', style: const TextStyle(color: ColorStyle.whiteColor)),
+                                        ],
+                                      ),
+                                    ],
+                                ),
+                              ),
+                            )
+                          ],
+                        )
                       );
                     },
                   );

@@ -14,6 +14,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin {
+  int?selected;
   List<Widget> pages = const [
     HomeItem(),
     SearchItem(),
@@ -26,152 +27,199 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin 
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return Container(
-      height: double.infinity,
-      width: double.infinity,
-      decoration: BoxDecoration(
-          gradient: const LinearGradient(
-              begin: Alignment.topRight,
-              end: Alignment.bottomLeft,
-              colors: [
-                ColorStyle.backgroundItemColor,
-                ColorStyle.backgroundItemColor2,
-              ],
-          ),
-        boxShadow: [
-          BoxShadow(
-              color: Colors.black.withOpacity(0.2),
-              spreadRadius: 1,
-              blurRadius: 10,
-              offset: const Offset(1, 2)
-          ),
-        ],
-      ) ,
-
-      child: Stack(
-        children :[ Scaffold(
-          backgroundColor: Colors.transparent,
-          body: Column(
-            children: [
-              const SizedBox(height: 20),
-              //AppBar-------------------------
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
-                      height: 100,
-                      width: 85,
-                      decoration: BoxDecoration(
-                          color: Colors.transparent,
-                        borderRadius: BorderRadius.circular(20)
-                      ),
-                      child: const Icon(Icons.menu, color: ColorStyle.whiteColor, size: 35,)),
-                 Padding(
-                    padding: const EdgeInsets.only(right: 30),
-                    child: botNavIndex == 0 ?
-                    const Text("Your Movie", style: TextStyle(color: ColorStyle.whiteColor, fontSize: 27, fontWeight: FontWeight.bold))
-                        : botNavIndex == 1 ?
-                    const Text("Search", style: TextStyle(color: ColorStyle.whiteColor, fontSize: 27, fontWeight: FontWeight.bold))
-                        :
-                    const Text("Save", style: TextStyle(color: ColorStyle.whiteColor, fontSize: 27, fontWeight: FontWeight.bold)),
-                  ),
-                ],
-              ),
-              Expanded(child: pages[botNavIndex]),
-
-            ],
-          )
-        ),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Container(
-              height: 70,
-              width: double.infinity,
-              decoration: BoxDecoration(
-                  borderRadius: const BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20)),
-                  color: ColorStyle.backgroundItemColor2,
-                  boxShadow: [
-                    BoxShadow(
-                        color: Colors.black.withOpacity(0.2),
-                        spreadRadius: 0.5,
-                        blurRadius: 8,
-                        offset: const Offset(1, 1)
-                    ),]
-              ),
-              child: ClipRRect(
-                child: BottomNavigationBar(
-                  currentIndex: botNavIndex,
-                  elevation: 0,
-                  backgroundColor: Colors.transparent,
-                  selectedItemColor: ColorStyle.whiteColor,
-                  unselectedItemColor: ColorStyle.whiteColor,
-                  items: [
-                    BottomNavigationBarItem(
-                        icon: Column(
-
-                      children: [
-                        if (botNavIndex == 0)
-                        Container(
-                          margin: const EdgeInsets.only(bottom: 5),
-                          height: 4.5,
-                          width: 20,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            color: ColorStyle.whiteColor,
-
-                          ),
-                        ),
-                        const Icon(Iconsax.home_1_copy),
-                      ],
-                    ), label: "Home"),
-                    BottomNavigationBarItem(
-                        icon: Column(
-                      children: [
-                        if (botNavIndex == 1)
-                          Container(
-                            margin: const EdgeInsets.only(bottom: 5),
-                            height: 4.5,
-                            width: 20,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              color: ColorStyle.whiteColor,
-
-                            ),
-                          ),
-                        const Icon(Iconsax.search_normal_copy),
-                      ],
-                    ), label: "Search"),
-                    BottomNavigationBarItem(
-                        icon: Column(
-                      children: [
-                        if (botNavIndex == 2)
-                          Container(
-                            margin: const EdgeInsets.only(bottom: 5),
-                            height: 4.5,
-                            width: 20,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              color: ColorStyle.whiteColor,
-
-                            ),
-                          ),
-                        const Icon(Iconsax.save_2_copy),
-                      ],
-                    ), label: "Save"),
-
+    return Stack(
+      children: [
+        Container(
+          height: double.infinity,
+          width: double.infinity,
+          decoration: BoxDecoration(
+              gradient: const LinearGradient(
+                  begin: Alignment.topRight,
+                  end: Alignment.bottomLeft,
+                  colors: [
+                    ColorStyle.backgroundItemColor,
+                    ColorStyle.backgroundItemColor2,
                   ],
-                  onTap: (value) {
-                    setState(() {
-                      botNavIndex = value;
-                    });
-                  },
+              ),
+            boxShadow: [
+              BoxShadow(
+                  color: Colors.black.withOpacity(0.2),
+                  spreadRadius: 1,
+                  blurRadius: 10,
+                  offset: const Offset(1, 2)
+              ),
+            ],
+          ) ,
+
+          child: Stack(
+            children :[ Scaffold(
+              backgroundColor: Colors.transparent,
+              body: Column(
+                children: [
+                  const SizedBox(height: 20),
+                  //AppBar-------------------------
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+                          height: 100,
+                          width: 85,
+                          decoration: BoxDecoration(
+                              color: Colors.transparent,
+                            borderRadius: BorderRadius.circular(20)
+                          ),
+                          child: InkWell(
+                            onTap: () {
+                              setState(() {
+                                selected = 1;
+                              });
+                            },
+                              child: const Icon(Icons.menu, color: ColorStyle.whiteColor, size: 35,))),
+                     Padding(
+                        padding: const EdgeInsets.only(right: 30),
+                        child: botNavIndex == 0 ?
+                        const Text("Your Movie", style: TextStyle(color: ColorStyle.whiteColor, fontSize: 27, fontWeight: FontWeight.bold))
+                            : botNavIndex == 1 ?
+                        const Text("Search", style: TextStyle(color: ColorStyle.whiteColor, fontSize: 27, fontWeight: FontWeight.bold))
+                            :
+                        const Text("Save", style: TextStyle(color: ColorStyle.whiteColor, fontSize: 27, fontWeight: FontWeight.bold)),
+                      ),
+                    ],
+                  ),
+                  Expanded(child: pages[botNavIndex]),
+
+                ],
+              )
+            ),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Container(
+                  height: 70,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                      borderRadius: const BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20)),
+                      color: ColorStyle.backgroundItemColor2,
+                      boxShadow: [
+                        BoxShadow(
+                            color: Colors.black.withOpacity(0.2),
+                            spreadRadius: 0.5,
+                            blurRadius: 8,
+                            offset: const Offset(1, 1)
+                        ),]
+                  ),
+                  child: ClipRRect(
+                    child: BottomNavigationBar(
+                      currentIndex: botNavIndex,
+                      elevation: 0,
+                      backgroundColor: Colors.transparent,
+                      selectedItemColor: ColorStyle.whiteColor,
+                      unselectedItemColor: ColorStyle.whiteColor,
+                      items: [
+                        BottomNavigationBarItem(
+                            icon: Column(
+
+                          children: [
+                            if (botNavIndex == 0)
+                            Container(
+                              margin: const EdgeInsets.only(bottom: 5),
+                              height: 4.5,
+                              width: 20,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20),
+                                color: ColorStyle.whiteColor,
+
+                              ),
+                            ),
+                            const Icon(Iconsax.home_1_copy),
+                          ],
+                        ), label: "Home"),
+                        BottomNavigationBarItem(
+                            icon: Column(
+                          children: [
+                            if (botNavIndex == 1)
+                              Container(
+                                margin: const EdgeInsets.only(bottom: 5),
+                                height: 4.5,
+                                width: 20,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                  color: ColorStyle.whiteColor,
+
+                                ),
+                              ),
+                            const Icon(Iconsax.search_normal_copy),
+                          ],
+                        ), label: "Search"),
+                        BottomNavigationBarItem(
+                            icon: Column(
+                          children: [
+                            if (botNavIndex == 2)
+                              Container(
+                                margin: const EdgeInsets.only(bottom: 5),
+                                height: 4.5,
+                                width: 20,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                  color: ColorStyle.whiteColor,
+
+                                ),
+                              ),
+                            const Icon(Iconsax.save_2_copy),
+                          ],
+                        ), label: "Save"),
+
+                      ],
+                      onTap: (value) {
+                        setState(() {
+                          botNavIndex = value;
+                        });
+                      },
+                    ),
+                  ),
                 ),
+              ),
+            ],
+          ),
+        ),
+        if (selected == 1)
+          GestureDetector(
+            onTap: () {
+              setState(() {
+                selected = null;
+              });
+            },
+            child: Align(
+              alignment: Alignment.bottomLeft,
+              child: Container(
+                height: double.infinity,
+                width: double.infinity,
+                color: Colors.black.withOpacity(0.3),
               ),
             ),
           ),
-        ],
-      ),
+        // if (selected == 1)
+        Align(
+          alignment: Alignment.bottomLeft,
+          child: AnimatedContainer(
+            height: 858,
+            width: selected == 1 ? 350 : 0,
+            decoration: const BoxDecoration(
+                color: Colors.white,
+              borderRadius: BorderRadius.only(topRight: Radius.circular(35))
+            ), duration: const Duration(milliseconds: 200),
+            curve: Curves.linear,
+            child: Container(
+              color: Colors.red,
+              child: Row(
+                children: [
+                  Text("data"),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 

@@ -119,9 +119,11 @@ class _HomeItemState extends State<HomeItem> with AutomaticKeepAliveClientMixin 
                               child: Padding(
                                 padding: EdgeInsets.symmetric(horizontal: 16, vertical: 5),
                                 child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     SizedBox(width: 20),
                                     Text("Watch Now", style: TextStyle(color:ColorStyle.whiteColor, fontSize: 34, fontWeight: FontWeight.bold),),
+                                    Text("Api by TMDB", style: TextStyle(color:ColorStyle.whiteColor, fontSize: 15),),
                                   ],),
                               ),
                             ),

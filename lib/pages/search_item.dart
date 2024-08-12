@@ -38,21 +38,14 @@ class _SearchItemState extends State<SearchItem> {
           children: [
             Container(
               decoration: const BoxDecoration(
-                  gradient: LinearGradient(
-                      begin: Alignment.topRight,
-                      end: Alignment.bottomLeft,
-                      colors: [
-                        ColorStyle.backgroundItemColor,
-                        ColorStyle.backgroundItemColor2,
-                      ]
-                  )
+                 color: ColorStyle.backgroundItemColor3
               ),
               child: Padding(
                 padding: const EdgeInsets.all(8),
                 child: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(30),
-                    color: Colors.black.withOpacity(0.1),
+                    color: Colors.white.withOpacity(0.05),
                   ),
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 15),

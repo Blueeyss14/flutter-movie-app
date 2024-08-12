@@ -56,7 +56,7 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin 
               const SizedBox(height: 20),
               //AppBar-------------------------
               Row(
-                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Container(
                     margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
@@ -88,16 +88,16 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin 
             child: Container(
               height: 70,
               width: double.infinity,
-              decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20)),
-                  gradient: LinearGradient(
-                      begin: Alignment.topRight,
-                      end: Alignment.bottomLeft,
-                      colors: [
-                        ColorStyle.backgroundItemColor,
-                        ColorStyle.backgroundItemColor2,
-                      ]
-                  )
+              decoration: BoxDecoration(
+                  borderRadius: const BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20)),
+                  color: ColorStyle.backgroundItemColor2,
+                  boxShadow: [
+                    BoxShadow(
+                        color: Colors.black.withOpacity(0.2),
+                        spreadRadius: 0.5,
+                        blurRadius: 8,
+                        offset: const Offset(1, 1)
+                    ),]
               ),
               child: ClipRRect(
                 child: BottomNavigationBar(

@@ -14,7 +14,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin {
-  List<Widget> pages = [
+  List<Widget> pages = const [
     HomeItem(),
     SearchItem(),
     SaveItem(),
@@ -88,11 +88,8 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin 
             child: Container(
               height: 70,
               width: double.infinity,
-              decoration: BoxDecoration(
-                  borderRadius: const BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20)),
-                  border: Border.all(
-                    color: ColorStyle.whiteColor,
-                  ),
+              decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20)),
                   gradient: LinearGradient(
                       begin: Alignment.topRight,
                       end: Alignment.bottomLeft,

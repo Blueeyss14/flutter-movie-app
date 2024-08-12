@@ -5,7 +5,8 @@ import 'package:movie_app_tmd_api/poviders/rating_star.dart';
 import 'package:movie_app_tmd_api/poviders/search_provider.dart';
 import 'package:provider/provider.dart';
 
-void main() {
+void main(){
+  // dotenv.load(fileName: ".env");
   runApp(
     MultiProvider(
       providers: [

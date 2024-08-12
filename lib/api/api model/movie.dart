@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:movie_app_tmd_api/api/api_key.dart';
 import 'package:http/http.dart' as http;
+import 'package:movie_app_tmd_api/pages/home_item.dart';
 
 class Movie {
   String title, thumbnail, overview, release;
@@ -13,7 +14,7 @@ class Movie {
   });
 
   static Future<List<Movie>> dataMovie() async {
-    Uri url = Uri.parse('https://api.themoviedb.org/3/discover/movie?api_key=${ApiKey.apiKey}&page=2');
+    Uri url = Uri.parse('https://api.themoviedb.org/3/discover/movie?api_key=${ApiKey.apiKey}&page=${HomeItem.page}');
     var responseAPI = await http.get(url);
     var data = (jsonDecode(responseAPI.body)) ['results'] as List;
 

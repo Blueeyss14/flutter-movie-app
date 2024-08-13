@@ -1,6 +1,8 @@
-import 'package:flutter/cupertino.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
+import 'package:movie_app_tmd_api/api/api%20model/movie.dart';
+import 'package:movie_app_tmd_api/components/icons/icon_componnent.dart';
 import 'package:movie_app_tmd_api/pages/home_item.dart';
 import 'package:movie_app_tmd_api/pages/save_item.dart';
 import 'package:movie_app_tmd_api/pages/search_item.dart';
@@ -26,6 +28,8 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin 
 
   @override
   Widget build(BuildContext context) {
+    final Future<List<Movie>> movie = Movie.dataMovie();
+    final List<IconComponent> iconsComp = IconComponent.dataIcon();
     super.build(context);
     return Stack(
       children: [
@@ -60,6 +64,7 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin 
                   //AppBar-------------------------
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Container(
                         margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
@@ -69,7 +74,7 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin 
                               color: Colors.transparent,
                             borderRadius: BorderRadius.circular(20)
                           ),
-                          child: InkWell(
+                          child: GestureDetector(
                             onTap: () {
                               setState(() {
                                 selected = 1;
@@ -191,30 +196,117 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin 
             },
             child: Align(
               alignment: Alignment.bottomLeft,
-              child: Container(
-                height: double.infinity,
-                width: double.infinity,
-                color: Colors.black.withOpacity(0.3),
+              child: BackdropFilter(
+                filter: ColorStyle.blurFilter,
+                child: Container(
+                  height: double.infinity,
+                  width: double.infinity,
+                  color: Colors.blueAccent.withOpacity(0.02),
+                ),
               ),
             ),
           ),
-        // if (selected == 1)
-        Align(
-          alignment: Alignment.bottomLeft,
-          child: AnimatedContainer(
+        AnimatedPositioned(
+          curve: Curves.linear,
+          bottom: 0,
+          left: selected != 1 ? -500 : 0,
+          duration: const Duration(milliseconds: 200),
+          child: Container(
             height: 858,
-            width: selected == 1 ? 350 : 0,
-            decoration: const BoxDecoration(
-                color: Colors.white,
-              borderRadius: BorderRadius.only(topRight: Radius.circular(35))
-            ), duration: const Duration(milliseconds: 200),
-            curve: Curves.linear,
-            child: Container(
-              color: Colors.red,
-              child: Row(
-                children: [
-                  Text("data"),
-                ],
+            width: 350 ,
+            decoration: BoxDecoration(
+                gradient: const LinearGradient(
+                  begin: Alignment.topRight,
+                  end: Alignment.bottomLeft,
+                  colors: [
+                    ColorStyle.backgroundItemColor2,
+                    ColorStyle.backgroundItemColor4,
+                  ],
+                ),
+              borderRadius: const BorderRadius.only(topRight: Radius.circular(35)),
+                boxShadow: [
+                  BoxShadow(
+                      color: Colors.black.withOpacity(0.2),
+                      spreadRadius: 0.5,
+                      blurRadius: 5,
+                      offset: const Offset(1, 1)
+                  ),]
+            ),
+            child: ClipRRect(
+              borderRadius: const BorderRadius.only(topRight: Radius.circular(35)),
+              child: Scaffold(
+                backgroundColor: Colors.transparent,
+                body: ListView(
+                  padding: EdgeInsets.zero,
+                  children: [
+                    FutureBuilder(
+                      future: movie,
+                      builder: (context, dynamic snapshot) {
+                        if (snapshot.connectionState == ConnectionState.waiting) {
+                          return Center(
+                              child: Image.asset('assets/images/loading_screen.gif', width: 60,));
+                        } else if (snapshot.hasData) {
+                          return Stack(
+                            children: [
+                              CarouselSlider.builder(
+                                itemCount: snapshot.data.length,
+                                options: CarouselOptions(
+                                  height: 300,
+                                  autoPlay: true,
+                                  viewportFraction: 1,
+                                  autoPlayInterval: const Duration(seconds: 1),
+                                ),
+                                itemBuilder: (context, index, realIndex) {
+                                  return Container(
+                                    width: double.infinity,
+                                    color: Colors.amber,
+                                    child: Image.network( 'https://image.tmdb.org/t/p/w500${snapshot.data[index].thumbnail}', fit: BoxFit.cover,),
+                                  );
+                                },
+                              ),
+                              Container(
+                                color: Colors.black.withOpacity(0.5),
+                                height: 300,
+                                width: double.infinity,
+                              ),
+                            ],
+                          );
+                        } else {
+                          return const Center(child: Text("No Data"));
+                        }
+                      },
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 5),
+                      child: Column(
+                        children: [
+                          for (int i = 0; i < iconsComp.length; i++)
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                padding: const EdgeInsets.all(8),
+                                decoration: const BoxDecoration(
+                                    color: Color(0xFF5A708C),
+                                ),
+                                child: Row(
+                                  children: [
+                                    Icon(iconsComp[i].sosmedIcon.icon, size: 30, color: ColorStyle.whiteColor,),
+                                    const SizedBox(width: 15),
+                                    Text(iconsComp[i].sosmedName, style: const TextStyle(color: ColorStyle.whiteColor,
+                                      fontSize: 18,
+                                    ),),
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(height: 3),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

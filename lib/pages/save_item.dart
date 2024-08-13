@@ -28,8 +28,8 @@ class _SaveItemState extends State<SaveItem> {
         future: _movie,
         builder: (context, dynamic snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(
-              child: CircularProgressIndicator(),
+            return Center(
+                child: Image.asset('assets/images/loading_screen.gif', width: 80,)
             );
           } else if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));

@@ -69,9 +69,8 @@ class _HomeItemState extends State<HomeItem> with AutomaticKeepAliveClientMixin 
               future: _trending,
               builder: (context, dynamic snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(
-                    child: CircularProgressIndicator(
-                    ),
+                  return Center(
+                    child: Image.asset('assets/images/loading_screen.gif', width: 80,)
                   );
                 } else if (snapshot.hasData) {
                   return SingleChildScrollView(
@@ -153,7 +152,7 @@ class _HomeItemState extends State<HomeItem> with AutomaticKeepAliveClientMixin 
                           builder: (context, dynamic snapshotMovie) {
                             if (snapshotMovie.connectionState == ConnectionState.waiting) {
                               return const Center(
-                                child: CircularProgressIndicator(),
+                                child: SizedBox.shrink(),
                               );
                             } else if (snapshotMovie.hasData) {
                               return ListView.builder(
@@ -166,7 +165,7 @@ class _HomeItemState extends State<HomeItem> with AutomaticKeepAliveClientMixin 
                                     padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
                                     child: Stack(
                                       children: [
-                                        InkWell(
+                                        GestureDetector(
                                           onTap : () {
                                             Navigator.push(context, MaterialPageRoute(builder: (context) => MovieClicked(
                                                 movieClicked: snapshotMovie.data[index]),
@@ -233,8 +232,7 @@ class _HomeItemState extends State<HomeItem> with AutomaticKeepAliveClientMixin 
                                                             children: [
                                                               const SizedBox(width: 5),
 
-                                                              InkWell(
-                                                                splashColor: Colors.transparent,
+                                                              GestureDetector(
                                                                 onTap: () {
                                                                   setState(() {
                                                                     if (selectedIndex == index) {
@@ -309,7 +307,7 @@ class _HomeItemState extends State<HomeItem> with AutomaticKeepAliveClientMixin 
                                               child: Column(
                                                 children: [
                                                   Expanded(
-                                                    child: InkWell(
+                                                    child: GestureDetector(
                                                       onTap: () {
                                                         setState(() {
                                                           watchLaterProvider.toggleWatchLater(index);
@@ -333,7 +331,7 @@ class _HomeItemState extends State<HomeItem> with AutomaticKeepAliveClientMixin 
                                                     ),
                                                   ),
                                                   Expanded(
-                                                    child: InkWell(
+                                                    child: GestureDetector(
                                                       onTap : () {
                                                         setState(() {
                                                         });
@@ -367,7 +365,6 @@ class _HomeItemState extends State<HomeItem> with AutomaticKeepAliveClientMixin 
                             } else {
                               return const Center(child: Text("No Data"));
                             }
-
                           },
                         ),
                         Padding(
@@ -375,8 +372,7 @@ class _HomeItemState extends State<HomeItem> with AutomaticKeepAliveClientMixin 
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              InkWell(
-                                splashColor: Colors.transparent,
+                              GestureDetector(
                                 onTap: () {
                                   setState(() {
                                     HomeItem.page--;
@@ -391,12 +387,12 @@ class _HomeItemState extends State<HomeItem> with AutomaticKeepAliveClientMixin 
                                   height: 40,
                                   width: 120,
                                   decoration: BoxDecoration(
-                                    gradient: LinearGradient(
+                                    gradient: const LinearGradient(
                                         begin: Alignment.topRight,
                                         end: Alignment.topLeft,
                                         colors: [
-                                          ColorStyle.backgroundItemColor.withOpacity(0.2),
                                           ColorStyle.backgroundItemColor2,
+                                          ColorStyle.backgroundItemColor4,
                                         ]
                                     ),
                                     borderRadius: BorderRadius.circular(5),
@@ -427,8 +423,7 @@ class _HomeItemState extends State<HomeItem> with AutomaticKeepAliveClientMixin 
                                     borderRadius: BorderRadius.circular(5),
                                   ),
                                   child: Center(child: Text('${HomeItem.page}'))),
-                              InkWell(
-                                splashColor: Colors.transparent,
+                              GestureDetector(
                                 onTap: () {
                                   Navigator.push(context, MaterialPageRoute(builder: (context) => const HomePage(),));
                                   setState(() {
@@ -439,12 +434,12 @@ class _HomeItemState extends State<HomeItem> with AutomaticKeepAliveClientMixin 
                                   height: 40,
                                   width: 120,
                                   decoration: BoxDecoration(
-                                      gradient: LinearGradient(
+                                      gradient: const LinearGradient(
                                           begin: Alignment.topRight,
                                           end: Alignment.topLeft,
                                           colors: [
-                                            ColorStyle.backgroundItemColor.withOpacity(0.2),
                                             ColorStyle.backgroundItemColor2,
+                                            ColorStyle.backgroundItemColor4,
                                           ]
                                       ),
                                     borderRadius: BorderRadius.circular(5),
@@ -462,6 +457,7 @@ class _HomeItemState extends State<HomeItem> with AutomaticKeepAliveClientMixin 
                             ],
                           ),
                         ),
+                        const SizedBox(height: 10),
                         Container(
                           height: 70,
                           width: double.infinity,

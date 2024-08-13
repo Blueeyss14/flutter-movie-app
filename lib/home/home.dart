@@ -212,7 +212,7 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin 
           left: selected != 1 ? -500 : 0,
           duration: const Duration(milliseconds: 200),
           child: Container(
-            height: 858,
+            height: 900,
             width: 350 ,
             decoration: BoxDecoration(
                 gradient: const LinearGradient(
